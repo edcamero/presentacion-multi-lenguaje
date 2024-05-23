@@ -100,9 +100,6 @@ imports:
 funcion para obtener el lenguaje 
 ```
    const browserLang = () => {
-    if (locale) {
-      return locale
-    }
     const detectedLocale = detect(fromNavigator(), defaultFallback)
     if (detectedLocale === null) {
       return defaultFallback
