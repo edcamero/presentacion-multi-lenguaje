@@ -1,7 +1,7 @@
-# Practica multi lenguaje en React
+#Practica multi lenguaje en React
 
 
-## Libreria Lingui
+##Libreria Lingui
 
 [lingui](https://lingui.dev/)
 
@@ -59,7 +59,7 @@ import { Trans } from '@lingui/react';
 import { Trans as TransMacro } from '@lingui/macro';
 ```
 
-componenetes:
+Componentes:
 
 ```
 <Trans id="OVaF9k" message="hola {name}" values={{ name }} />;
