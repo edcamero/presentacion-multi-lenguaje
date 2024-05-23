@@ -1,46 +1,116 @@
-# Getting Started with Create React App
+# Practica multi lenguaje en React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Libreria Lingui
 
-In the project directory, you can run:
+[lingui](https://lingui.dev/)
 
-### `npm start`
+##Creación de la aplicación 
+### `npx create-react-app test-multi-lenguaje --template typescript`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+##instalación de la librerias de lingui 
+ ```
+yarn add --dev @lingui/cli @babel/core
+yarn add --dev @lingui/macro babel-plugin-macros
+yarn add @lingui/react
+ ```
+##configuración de lingui
+nombre del archivo de configuracion: `lingui.config.ts`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+ ```
+import { LinguiConfig } from "@lingui/conf";
 
-### `npm test`
+const linguiConfig: LinguiConfig = {
+  locales: ["en", "es"],
+  sourceLocale: "es",
+  catalogs: [
+    {
+      path: "<rootDir>/src/locales/{locale}/messages",
+      include: ["src"],
+    },
+  ],
+  format: 'po',
+  compileNamespace: "ts"
+};
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+export default linguiConfig;
+ ```
+### Configuración opcional
+Archivos con las traduciones en formato json
+`yarn add --dev @lingui/format-json`
+En el archivo de configuracion replazar 
+` format: 'po',`
+por 
+`format: formatter({style: "minimal"}), `
 
-### `npm run build`
+### Agregar los script de lingui al proyecto
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+en el package.json en la area de scripts agregar los siguientes:
+```
+"extract": "lingui extract",
+"compile": "lingui compile"
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+###Usar etiquetas trans y t en el proyecto
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+imports:
+```
+import { Trans } from '@lingui/react';
+import { Trans as TransMacro } from '@lingui/macro';
+```
 
-### `npm run eject`
+componenetes:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+<Trans id="OVaF9k" message="hola {name}" values={{ name }} />;
+<TransMacro>Hola , LinguiJS es una internacionalización legible, automatizada y optimizada (3 kb) para JavaScript.</TransMacro>
+```
+###Extract
+ejecutar en la consola en la raiz del proyecto el siguiente comando 
+`yarn extract`
+luego se agregan las traducciones manualmente para completar la que no es por defecto 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+generar los mensajes optimizados para la tarduccion en react js 
+`yarn compile`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+###Utilizar las traducciones
+envolver el componente principal con `<I18nProvider i18n={i18n}>`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+importar la tradución deseada
+`import { messages } from "./locales/en/messages";`
+Cargar y activarla
+```
+  i18n.load('en', messages);
+  i18n.activate('en');
+```
 
-## Learn More
+###Import dinamico
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+  async function dynamicActivate(locale: string) {
+    const { messages } = await import(`./locales/${locale}/messages`);
+    i18n.load(locale, messages);
+    i18n.activate(locale);
+  }
+```
+###Detectar idioma del navegador 
+instalar la libreria 
+` yarn add @lingui/detect-locale`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+imports:
+` import { detect, fromNavigator } from '@lingui/detect-locale'`
+
+funcion para obtener el lenguaje 
+```
+   const browserLang = () => {
+    if (locale) {
+      return locale
+    }
+    const detectedLocale = detect(fromNavigator(), defaultFallback)
+    if (detectedLocale === null) {
+      return defaultFallback
+    }
+
+    return detectedLocale.substring(0, 2)
+  }
+```
