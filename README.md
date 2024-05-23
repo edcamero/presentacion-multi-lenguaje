@@ -1,20 +1,18 @@
-#Practica multi lenguaje en React
-
-
-##Libreria Lingui
+# Practica multi lenguaje en React
+## Libreria Lingui
 
 [lingui](https://lingui.dev/)
 
 ##Creación de la aplicación 
 ### `npx create-react-app test-multi-lenguaje --template typescript`
 
-##instalación de la librerias de lingui 
+## instalación de la librerias de lingui 
  ```
 yarn add --dev @lingui/cli @babel/core
 yarn add --dev @lingui/macro babel-plugin-macros
 yarn add @lingui/react
  ```
-##configuración de lingui
+## Configuración de lingui
 nombre del archivo de configuracion: `lingui.config.ts`
 
  ```
@@ -51,7 +49,7 @@ en el package.json en la area de scripts agregar los siguientes:
 "compile": "lingui compile"
 ```
 
-###Usar etiquetas trans y t en el proyecto
+### Usar etiquetas trans y t en el proyecto
 
 imports:
 ```
@@ -59,13 +57,13 @@ import { Trans } from '@lingui/react';
 import { Trans as TransMacro } from '@lingui/macro';
 ```
 
-Componentes:
+### Componentes:
 
 ```
 <Trans id="OVaF9k" message="hola {name}" values={{ name }} />;
 <TransMacro>Hola , LinguiJS es una internacionalización legible, automatizada y optimizada (3 kb) para JavaScript.</TransMacro>
 ```
-###Extract
+### Extract
 ejecutar en la consola en la raiz del proyecto el siguiente comando 
 `yarn extract`
 luego se agregan las traducciones manualmente para completar la que no es por defecto 
@@ -73,7 +71,7 @@ luego se agregan las traducciones manualmente para completar la que no es por de
 generar los mensajes optimizados para la tarduccion en react js 
 `yarn compile`
 
-###Utilizar las traducciones
+### Utilizar las traducciones
 envolver el componente principal con `<I18nProvider i18n={i18n}>`
 
 importar la tradución deseada
@@ -83,8 +81,7 @@ Cargar y activarla
   i18n.load('en', messages);
   i18n.activate('en');
 ```
-
-###Import dinamico
+### Import dinamico
 
 ```
   async function dynamicActivate(locale: string) {
@@ -93,7 +90,7 @@ Cargar y activarla
     i18n.activate(locale);
   }
 ```
-###Detectar idioma del navegador 
+### Detectar idioma del navegador 
 instalar la libreria 
 ` yarn add @lingui/detect-locale`
 
