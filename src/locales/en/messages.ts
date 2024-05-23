@@ -1,0 +1,1 @@
+/*eslint-disable*/import type{Messages}from"@lingui/core";export const messages:Messages=JSON.parse("{\"+MmubI\":\"Hello, LinguiJS is a readable, automated and optimized internationalization (3 kb) for JavaScript.\",\"OVaF9k\":[\"hello \",[\"name\"]],\"m6cSyc\":\"hello friend\"}");
