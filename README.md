@@ -3,7 +3,7 @@
 
 [lingui](https://lingui.dev/)
 
-##Creación de la aplicación 
+## Creación de la aplicación 
 ### `npx create-react-app test-multi-lenguaje --template typescript`
 
 ## instalación de la librerias de lingui 
